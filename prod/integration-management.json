@@ -1,0 +1,963 @@
+{
+    "id": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/dashboards/providers/microsoft.portal/dashboards/integration-management",
+    "name": "integration-management",
+    "type": "microsoft.portal/dashboards",
+    "location": "westeurope",
+    "tags": {
+        "hidden-title": "Integration Management"
+    },
+    "kind": "",
+    "sku": null,
+    "plan": null,
+    "managedBy": "",
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {
+                    "0": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "timeFormat": "HH:mm",
+                                        "timezoneId": "Romance Standard Time",
+                                        "version": 1
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/ClockPart"
+                        },
+                        "position": {
+                            "colSpan": 1,
+                            "rowSpan": 1,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    "1": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "content": "__General Reports__\n\n",
+                                        "markdownSource": 1,
+                                        "subtitle": "",
+                                        "title": ""
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/MarkdownPart"
+                        },
+                        "position": {
+                            "colSpan": 3,
+                            "rowSpan": 1,
+                            "x": 1,
+                            "y": 0
+                        }
+                    },
+                    "2": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "6558f4cb-9eef-4fe4-a147-90acd414af6c"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P1D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "// failed request count by name in last 7d\n\nlet kubernetesNamespace = \"integration-management\";\n\nlet dataset=requests\n    // additional filters can be applied here\n    | where timestamp > ago(7d)\n    | where client_Type != \"Browser\"\n;\ndataset\n// change 'operation_Name' on the below line to segment by a different property\n| summarize failedCount=sumif(itemCount, success == false and (iif(itemType == \"request\", (column_ifexists('customDimensions', '')[\"KubernetesNamespace\"] == kubernetesNamespace), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests\n    | where timestamp > ago(7d)\n    | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n    | distinct id))) \n    or (itemType != \"request\" and operation_ParentId in ((requests\n    | where timestamp > ago(7d)\n    | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n    | distinct id)))))), impactedUsers=dcountif(user_Id, success == false and (iif(itemType == \"request\", (column_ifexists('customDimensions', '')[\"KubernetesNamespace\"] == kubernetesNamespace), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests\n    | where timestamp > ago(7d)\n    | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n    | distinct id))) \n    or (itemType != \"request\" and operation_ParentId in ((requests\n    | where timestamp > ago(7d)\n    | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n    | distinct id)))))), totalCount=sum(itemCount)\n    by operation_Name\n// calculate failed request count for all requests\n| union(dataset\n    | summarize failedCount=sumif(itemCount, success == false and (iif(itemType == \"request\", (column_ifexists('customDimensions', '')[\"KubernetesNamespace\"] == kubernetesNamespace), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests\n        | where timestamp > ago(7d)\n        | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n        | distinct id))) \n        or (itemType != \"request\" and operation_ParentId in ((requests\n        | where timestamp > ago(7d)\n        | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n        | distinct id)))))), impactedUsers=dcountif(user_Id, success == false and (iif(itemType == \"request\", (column_ifexists('customDimensions', '')[\"KubernetesNamespace\"] == kubernetesNamespace), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests\n        | where timestamp > ago(7d)\n        | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n        | distinct id))) \n        or (itemType != \"request\" and operation_ParentId in ((requests\n        | where timestamp > ago(7d)\n        | where customDimensions[\"KubernetesNamespace\"] == kubernetesNamespace\n        | distinct id)))))), totalCount=sum(itemCount)\n    | extend operation_Name=\"Overall\")\n| where failedCount > 0\n| order by failedCount desc"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Top Failed Requests in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "operation_Name": "433px"
+                                    },
+                                    "PartTitle": "Top Failed Requests in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 12,
+                            "rowSpan": 5,
+                            "x": 0,
+                            "y": 1
+                        }
+                    },
+                    "3": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "15fa6bcc-153a-431f-8f32-30297a310af5"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "// Exceptions causing request failures \n// Find which exceptions led to failed requests in the past hour. \nlet systemName = \"integration-management\";\nlet since = ago(7d);\nrequests\n| where timestamp > since\n| where customDimensions.KubernetesNamespace == systemName\n| where success == false\n| join kind= inner (exceptions) on operation_Id\n| project exceptionType = type, requestName = name, failedMethod = method, operation_Id, timestamp\n| summarize ExampleOperationId=max(operation_Id), LastOcurrence=max(timestamp), count() by exceptionType, failedMethod, requestName\n| order by count_\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Top Exceptions in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "ExampleOperationId": "272px",
+                                        "exceptionType": "352px",
+                                        "failedMethod": "347px",
+                                        "LastOcurrence": "163px",
+                                        "requestName": "291px"
+                                    },
+                                    "PartTitle": "Top Exceptions in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 3,
+                            "x": 0,
+                            "y": 6
+                        }
+                    },
+                    "4": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "6114bf8c-b699-4042-b58a-f95ea7d0edf1"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P7D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\n| where customDimensions.KubernetesNamespace == \"integration-management\" and success == True\n| where url has \"/api/\" and name !has \"GET Warmup/Warmup\"\n| summarize Duration=avg(duration) by Endpoint=name\n| order by Duration desc \n| take 10 \n| render barchart  \n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedBar"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "Endpoint",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "Duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Top Slowest Requests in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartTitle": "Top Slowest Requests in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 5,
+                            "x": 0,
+                            "y": 9
+                        }
+                    },
+                    "5": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "56bcfd47-6f68-43f0-a260-2d8a47086766"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P7D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\n| where customDimensions.KubernetesNamespace == \"integration-management\"\n| where success == True\n| where url has \"/api/\" and not(url has \"/warmup\")\n| summarize ResponseTime=avg(duration) by Timestamp=bin(timestamp, 10m) // use a time grain of 10 minutes\n| render timechart\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "Timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "ResponseTime",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Average Response Time in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartTitle": "Average Response Time in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 3,
+                            "x": 0,
+                            "y": 14
+                        }
+                    },
+                    "6": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "63f7bb4d-d1db-459c-b526-824f011aade8"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P7D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\n| where customDimensions.KubernetesNamespace == \"integration-management\" and success == True\n| where url has \"/api/\" and name !has \"GET Warmup/Warmup\"\n| summarize total_requests = sum(itemCount) by name\n| top 10 by total_requests desc\n| render barchart  "
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedBar"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "name",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "total_requests",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Total Requests in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartTitle": "Total Requests in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 5,
+                            "x": 0,
+                            "y": 17
+                        }
+                    },
+                    "7": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "content": "__Content Connectors Reports__\n\n",
+                                        "markdownSource": 1,
+                                        "subtitle": "",
+                                        "title": ""
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/MarkdownPart"
+                        },
+                        "position": {
+                            "colSpan": 3,
+                            "rowSpan": 1,
+                            "x": 0,
+                            "y": 22
+                        }
+                    },
+                    "8": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "3693b55c-3cd4-4fd6-af6f-ee38849c444d"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P7D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\n| where ((operation_Name startswith \"GET Images\"))\n| where resultCode != 200 and resultCode != 0\n| project timestamp, name, url, resultCode, duration, performanceBucket, operation_Id\n| order by timestamp desc\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Failed Requests for \"/Images\" Ednpoints in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "name": "419px",
+                                        "operation_Id": "293px",
+                                        "performanceBucket": "179px",
+                                        "resultCode": "122px",
+                                        "url": "518px"
+                                    },
+                                    "PartTitle": "Failed Requests for \"/Images\" Ednpoints in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 23
+                        }
+                    },
+                    "9": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "content": "__Data Connectors Reports__\n\n",
+                                        "markdownSource": 1,
+                                        "subtitle": "",
+                                        "title": ""
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/MarkdownPart"
+                        },
+                        "position": {
+                            "colSpan": 3,
+                            "rowSpan": 1,
+                            "x": 0,
+                            "y": 27
+                        }
+                    },
+                    "10": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "content": "__Delivery Connectors Reports__\n\n",
+                                        "markdownSource": 1,
+                                        "subtitle": "",
+                                        "title": ""
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/MarkdownPart"
+                        },
+                        "position": {
+                            "colSpan": 3,
+                            "rowSpan": 1,
+                            "x": 0,
+                            "y": 28
+                        }
+                    },
+                    "11": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "content": "__App Connectors Reports__\n\n",
+                                        "markdownSource": 1,
+                                        "subtitle": "",
+                                        "title": ""
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/MarkdownPart"
+                        },
+                        "position": {
+                            "colSpan": 3,
+                            "rowSpan": 1,
+                            "x": 0,
+                            "y": 29
+                        }
+                    },
+                    "12": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "3c1a0540-8fc5-47a9-9157-c66c1a83c5ad"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P7D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\n| where ((operation_Name has \"stuf\"))\n| where resultCode != 200 and resultCode != 0\n| project timestamp, name, url, resultCode, duration, performanceBucket, operation_Id\n| order by timestamp desc\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Failed Requests for \"stuf\" Ednpoints in Last 7d"
+                            },
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "name": "398px",
+                                        "url": "535px"
+                                    },
+                                    "PartTitle": "Failed Requests for \"stuf\" Ednpoints in Last 7d"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 30
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "model": {
+                "filterLocale": {
+                    "value": "en-us"
+                },
+                "filters": {
+                    "value": {
+                        "MsPortalFx_TimeRange": {
+                            "displayCache": {
+                                "name": "UTC Time",
+                                "value": "Past 7 days"
+                            },
+                            "filteredPartIds": [
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1cb",
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1cd",
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1cf",
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1d1",
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1d3",
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1d7",
+                                "StartboardPart-LogsDashboardPart-a33e4c00-e1cb-4f41-9b8b-7685542af1df"
+                            ],
+                            "model": {
+                                "format": "utc",
+                                "granularity": "auto",
+                                "relative": "7d"
+                            }
+                        }
+                    }
+                },
+                "timeRange": {
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange",
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

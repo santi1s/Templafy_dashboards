@@ -1,0 +1,347 @@
+{
+    "id": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/dashboards/providers/microsoft.portal/dashboards/authentication",
+    "name": "authentication",
+    "type": "microsoft.portal/dashboards",
+    "location": "westeurope",
+    "tags": {
+        "hidden-title": "Authentication"
+    },
+    "kind": "",
+    "sku": null,
+    "plan": null,
+    "managedBy": "",
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {
+                    "0": {
+                        "metadata": {
+                            "asset": {
+                                "idInputName": "ResourceId",
+                                "type": "ApplicationInsights"
+                            },
+                            "inputs": [
+                                {
+                                    "name": "ResourceId",
+                                    "value": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                },
+                                {
+                                    "name": "ComponentId",
+                                    "value": {
+                                        "IsAzureFirst": false,
+                                        "LinkedApplicationType": 0,
+                                        "Name": "templafyproduction",
+                                        "ResourceGroup": "Monitor",
+                                        "ResourceId": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction",
+                                        "ResourceType": "microsoft.insights/components",
+                                        "SubscriptionId": "5b17cf24-70b2-4d5a-b0a2-295036ef873b"
+                                    }
+                                },
+                                {
+                                    "name": "TargetBlade",
+                                    "value": "Failures"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DataModel",
+                                    "value": {
+                                        "clientTypeMode": "Server",
+                                        "experience": 1,
+                                        "filters": [
+                                            {
+                                                "builtIn": false,
+                                                "canEdit": true,
+                                                "kql": "iif( itemType == \"request\", (column_ifexists('customDimensions', '')[\"system_KubernetesNamespace\"] == \"authentication\"), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id))) \nor (itemType != \"request\" and operation_ParentId in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id))))",
+                                                "name": "customDimensions[\"system_KubernetesNamespace\"]",
+                                                "operator": "==",
+                                                "table": "requests",
+                                                "timeContext": {
+                                                    "createdTime": "2022-05-13T13:33:35.257Z",
+                                                    "durationMs": 86400000,
+                                                    "grain": 1,
+                                                    "isInitialTime": false,
+                                                    "useDashboardTimeRange": false
+                                                },
+                                                "values": [
+                                                    "authentication"
+                                                ]
+                                            }
+                                        ],
+                                        "grain": "3h",
+                                        "prefix": "let OperationIdsWithExceptionType = (excType: string) { exceptions | where timestamp > ago(7d) \n    | where tobool(iff(excType == \"null\", isempty(type), type == excType)) \n    | distinct operation_ParentId };\nlet OperationIdsWithFailedReqResponseCode = (respCode: string) { requests | where timestamp > ago(7d)\n    | where iff(respCode == \"null\", isempty(resultCode), resultCode == respCode) and success == false \n    | distinct id };\nlet OperationIdsWithFailedDependencyType = (depType: string) { dependencies | where timestamp > ago(7d)\n    | where iff(depType == \"null\", isempty(type), type == depType) and success == false \n    | distinct operation_ParentId };\nlet OperationIdsWithFailedDepResponseCode = (respCode: string) { dependencies | where timestamp > ago(7d)\n    | where iff(respCode == \"null\", isempty(resultCode), resultCode == respCode) and success == false \n    | distinct operation_ParentId };\nlet OperationIdsWithExceptionBrowser = (browser: string) { exceptions | where timestamp > ago(7d)\n    | where tobool(iff(browser == \"null\", isempty(client_Browser), client_Browser == browser)) \n    | distinct operation_ParentId };",
+                                        "selectedOperation": null,
+                                        "selectedOperationName": null,
+                                        "timeContext": {
+                                            "durationMs": 604800000
+                                        },
+                                        "version": "1.0.0"
+                                    }
+                                },
+                                {
+                                    "name": "Version",
+                                    "value": "1.0"
+                                }
+                            ],
+                            "partHeader": {
+                                "subtitle": "",
+                                "title": "Failures: Authentication"
+                            },
+                            "type": "Extension/AppInsightsExtension/PartType/FailuresCuratedPinnedChartPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    "1": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "8cd35532-9b6e-4ab7-b49a-8ba212dd2900"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "// failed request count by name\nlet start=datetime(\"2022-05-27T13:22:00.000Z\");\nlet end=datetime(\"2022-06-03T13:22:00.000Z\");\nlet timeGrain=3h;\nlet dataset=requests\n// additional filters can be applied here\n| where timestamp > start and timestamp < end\n| where client_Type != \"Browser\"\n;dataset\n// change 'operation_Name' on the below line to segment by a different property\n| summarize failedCount=sumif(itemCount, success == false and (iif( itemType == \"request\", (column_ifexists('customDimensions', '')[\"system_KubernetesNamespace\"] == \"authentication\"), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id))) \nor (itemType != \"request\" and operation_ParentId in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id)))))), impactedUsers=dcountif(user_Id, success == false and (iif( itemType == \"request\", (column_ifexists('customDimensions', '')[\"system_KubernetesNamespace\"] == \"authentication\"), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id))) \nor (itemType != \"request\" and operation_ParentId in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id)))))), totalCount=sum(itemCount) by operation_Name\n// calculate failed request count for all requests\n| union(dataset\n| summarize failedCount=sumif(itemCount, success == false and (iif( itemType == \"request\", (column_ifexists('customDimensions', '')[\"system_KubernetesNamespace\"] == \"authentication\"), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id))) \nor (itemType != \"request\" and operation_ParentId in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id)))))), impactedUsers=dcountif(user_Id, success == false and (iif( itemType == \"request\", (column_ifexists('customDimensions', '')[\"system_KubernetesNamespace\"] == \"authentication\"), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id))) \nor (itemType != \"request\" and operation_ParentId in ((requests | where timestamp > datetime(\"2022-05-12T13:40:14.998Z\") and timestamp < datetime(\"2022-05-13T13:40:14.998Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\" | distinct id)))))), totalCount=sum(itemCount)| extend operation_Name=\"Overall\")\n| where failedCount > 0\n| order by failedCount desc\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Pie"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "operation_Name",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "failedCount",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "operation_Name",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "totalCount",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    },
+                                    "LegendOptions": {
+                                        "isEnabled": true,
+                                        "position": "Right"
+                                    },
+                                    "PartSubTitle": "Authentication - 7 days",
+                                    "PartTitle": "Top 10 failed endpoints",
+                                    "Query": "// failed request count by name\nlet start=ago(7d);\nrequests\n| where timestamp > start\n| where client_Type != \"Browser\"\n| where customDimensions[\"system_KubernetesNamespace\"] == \"authentication\"\n| where success == false\n| summarize totalCount=sum(itemCount) by operation_Name\n| order by totalCount\n| limit 10\n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 10,
+                            "rowSpan": 4,
+                            "x": 6,
+                            "y": 0
+                        }
+                    },
+                    "2": {
+                        "metadata": {
+                            "asset": {
+                                "idInputName": "ResourceId",
+                                "type": "ApplicationInsights"
+                            },
+                            "inputs": [
+                                {
+                                    "name": "ResourceId",
+                                    "value": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                },
+                                {
+                                    "name": "ComponentId",
+                                    "value": {
+                                        "IsAzureFirst": false,
+                                        "LinkedApplicationType": 0,
+                                        "Name": "templafyproduction",
+                                        "ResourceGroup": "Monitor",
+                                        "ResourceId": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction",
+                                        "ResourceType": "microsoft.insights/components",
+                                        "SubscriptionId": "5b17cf24-70b2-4d5a-b0a2-295036ef873b"
+                                    }
+                                },
+                                {
+                                    "name": "TargetBlade",
+                                    "value": "Failures"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DataModel",
+                                    "value": {
+                                        "clientTypeMode": "Server",
+                                        "experience": 1,
+                                        "filters": [
+                                            {
+                                                "builtIn": false,
+                                                "canEdit": true,
+                                                "kql": "iif( itemType == \"request\", (column_ifexists('customDimensions', '')[\"system_KubernetesNamespace\"] == \"add-in-management\"), (itemType == \"request\" and column_ifexists(\"id\", operation_ParentId) in ((requests | where timestamp > datetime(\"2022-05-06T13:42:36.185Z\") and timestamp < datetime(\"2022-05-13T13:42:36.185Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"add-in-management\" | distinct id))) \nor (itemType != \"request\" and operation_ParentId in ((requests | where timestamp > datetime(\"2022-05-06T13:42:36.185Z\") and timestamp < datetime(\"2022-05-13T13:42:36.185Z\")| where customDimensions[\"system_KubernetesNamespace\"] == \"add-in-management\" | distinct id))))",
+                                                "name": "customDimensions[\"system_KubernetesNamespace\"]",
+                                                "operator": "==",
+                                                "table": "requests",
+                                                "timeContext": {
+                                                    "durationMs": 604800000
+                                                },
+                                                "values": [
+                                                    "add-in-management"
+                                                ]
+                                            }
+                                        ],
+                                        "grain": "3h",
+                                        "prefix": "let OperationIdsWithExceptionType = (excType: string) { exceptions | where timestamp > ago(7d) \n    | where tobool(iff(excType == \"null\", isempty(type), type == excType)) \n    | distinct operation_ParentId };\nlet OperationIdsWithFailedReqResponseCode = (respCode: string) { requests | where timestamp > ago(7d)\n    | where iff(respCode == \"null\", isempty(resultCode), resultCode == respCode) and success == false \n    | distinct id };\nlet OperationIdsWithFailedDependencyType = (depType: string) { dependencies | where timestamp > ago(7d)\n    | where iff(depType == \"null\", isempty(type), type == depType) and success == false \n    | distinct operation_ParentId };\nlet OperationIdsWithFailedDepResponseCode = (respCode: string) { dependencies | where timestamp > ago(7d)\n    | where iff(respCode == \"null\", isempty(resultCode), resultCode == respCode) and success == false \n    | distinct operation_ParentId };\nlet OperationIdsWithExceptionBrowser = (browser: string) { exceptions | where timestamp > ago(7d)\n    | where tobool(iff(browser == \"null\", isempty(client_Browser), client_Browser == browser)) \n    | distinct operation_ParentId };",
+                                        "selectedOperation": null,
+                                        "selectedOperationName": null,
+                                        "timeContext": {
+                                            "durationMs": 604800000
+                                        },
+                                        "version": "1.0.0"
+                                    }
+                                },
+                                {
+                                    "name": "Version",
+                                    "value": "1.0"
+                                }
+                            ],
+                            "partHeader": {
+                                "subtitle": "",
+                                "title": "Failures: AddInManagement"
+                            },
+                            "type": "Extension/AppInsightsExtension/PartType/FailuresCuratedPinnedChartPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 4
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "model": {
+                "filterLocale": {
+                    "value": "en-us"
+                },
+                "filters": {
+                    "value": {
+                        "MsPortalFx_TimeRange": {
+                            "displayCache": {
+                                "name": "UTC Time",
+                                "value": "Past 24 hours"
+                            },
+                            "filteredPartIds": [
+                                "StartboardPart-LogsDashboardPart-d80ad0a6-9517-4fcb-8d4b-1e111dc3a065"
+                            ],
+                            "model": {
+                                "format": "utc",
+                                "granularity": "auto",
+                                "relative": "24h"
+                            }
+                        }
+                    }
+                },
+                "timeRange": {
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange",
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

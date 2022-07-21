@@ -1,0 +1,34 @@
+{
+    "id": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/dashboards/providers/microsoft.portal/dashboards/add-in-management",
+    "name": "add-in-management",
+    "type": "microsoft.portal/dashboards",
+    "location": "westeurope",
+    "tags": {
+        "hidden-title": "Add-in Management"
+    },
+    "kind": "",
+    "sku": null,
+    "plan": null,
+    "managedBy": "",
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {}
+            }
+        },
+        "metadata": {
+            "model": {
+                "timeRange": {
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange",
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

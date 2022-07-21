@@ -1,0 +1,1175 @@
+{
+    "id": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/dashboards/providers/microsoft.portal/dashboards/dynamics",
+    "name": "dynamics",
+    "type": "microsoft.portal/dashboards",
+    "location": "westeurope",
+    "tags": {
+        "hidden-title": "Dynamics"
+    },
+    "kind": "",
+    "sku": null,
+    "plan": null,
+    "managedBy": "",
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {
+                    "0": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "553fe6de-a210-408c-a0c0-8d7548c5a959"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let systemName = \"library-management\";\nlet timeFrame = 28d;\nlet topRequests=requests\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| where operation_Name != \"\"\n| summarize Count = count() by operation_Name\n| order by Count\n| top 5 by Count\n| project operation_Name\n;\nrequests\n| where operation_Name in (topRequests)\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| summarize avg(duration) by operation_Name, bin(timestamp, 7d)\n| render timechart\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "operation_Name",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "operation_Name",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "Duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    },
+                                    "PartTitle": "Top 5 Requests Duration Over Time (90th percentile)",
+                                    "Query": "let systemName = \"dynamics\";\nlet timeFrame = 14d;\nlet topRequests=requests\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"system_KubernetesNamespace\"] == systemName\n| where operation_Name != \"\"\n| where operation_Name !contains \".css\"\n| where operation_Name !contains \".js\"\n| summarize Count = count() by operation_Name\n| order by Count\n| top 5 by Count\n| project operation_Name\n;\nrequests\n| where operation_Name in (topRequests)\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"system_KubernetesNamespace\"] == systemName\n| summarize Duration=percentiles(duration, 90) by operation_Name, bin(timestamp, 2d)\n| render timechart \n\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    "1": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "553fe6de-a210-408c-a0c0-8d7548c5a959"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let systemName = \"library-management\";\nlet timeFrame = 28d;\nlet topRequests=requests\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| where operation_Name != \"\"\n| summarize Count = count() by operation_Name\n| order by Count\n| top 5 by Count\n| project operation_Name\n;\nrequests\n| where operation_Name in (topRequests)\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| summarize avg(duration) by operation_Name, bin(timestamp, 7d)\n| render timechart\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "operation_Name",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "BlankFailed",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    },
+                                    "PartTitle": "Create Document Blank Document Failures",
+                                    "Query": "let systemName = \"dynamics\";\nlet timeFrame = 28d;\nrequests\n| where customDimensions.system_KubernetesNamespace==systemName\n  and name contains \"CreateBlankDocument\" \n  and timestamp > ago(timeFrame)\n  and success == false\n| summarize BlankFailed=count() by floor(timestamp, 1d) \n| render timechart;\n\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 9,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 4
+                        }
+                    },
+                    "2": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "553fe6de-a210-408c-a0c0-8d7548c5a959"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let systemName = \"library-management\";\nlet timeFrame = 28d;\nlet topRequests=requests\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| where operation_Name != \"\"\n| summarize Count = count() by operation_Name\n| order by Count\n| top 5 by Count\n| project operation_Name\n;\nrequests\n| where operation_Name in (topRequests)\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| summarize avg(duration) by operation_Name, bin(timestamp, 7d)\n| render timechart\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "operation_Name",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "NormalFailure",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    },
+                                    "PartTitle": "Create Document Non Blank Document Failures",
+                                    "Query": "let systemName = \"dynamics\";\nlet timeFrame = 28d;\nrequests\n| where customDimensions.system_KubernetesNamespace==systemName\n  and name contains \"CreateDocument\" \n  and timestamp > ago(timeFrame)\n  and success == false\n| project timestamp\n| summarize NormalFailure=count() by floor(timestamp, 1d) \n| render timechart;\n\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 9,
+                            "rowSpan": 4,
+                            "x": 9,
+                            "y": 4
+                        }
+                    },
+                    "3": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "553fe6de-a210-408c-a0c0-8d7548c5a959"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let systemName = \"library-management\";\nlet timeFrame = 28d;\nlet topRequests=requests\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| where operation_Name != \"\"\n| summarize Count = count() by operation_Name\n| order by Count\n| top 5 by Count\n| project operation_Name\n;\nrequests\n| where operation_Name in (topRequests)\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| summarize avg(duration) by operation_Name, bin(timestamp, 7d)\n| render timechart\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "operation_Name",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "BlankSuccess",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    },
+                                    "PartTitle": "Create Document Blank Documents Success",
+                                    "Query": "let systemName = \"dynamics\";\nlet timeFrame = 28d;\nrequests\n| where customDimensions.system_KubernetesNamespace==systemName\n  and name contains \"CreateBlankDocument\" \n  and timestamp > ago(timeFrame)\n  and success == true\n| summarize BlankSuccess=count() by floor(timestamp, 1d) \n| render timechart;\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 9,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 8
+                        }
+                    },
+                    "4": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/Microsoft.Insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "553fe6de-a210-408c-a0c0-8d7548c5a959"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let systemName = \"library-management\";\nlet timeFrame = 28d;\nlet topRequests=requests\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| where operation_Name != \"\"\n| summarize Count = count() by operation_Name\n| order by Count\n| top 5 by Count\n| project operation_Name\n;\nrequests\n| where operation_Name in (topRequests)\n| where timestamp > ago(timeFrame)\n| where customDimensions[\"KubernetesNamespace\"] == systemName\n| summarize avg(duration) by operation_Name, bin(timestamp, 7d)\n| render timechart\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "operation_Name",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "NormalSuccess",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    },
+                                    "PartTitle": "Create Document Non Blank Document Success",
+                                    "Query": "let systemName = \"dynamics\";\nlet timeFrame = 28d;\nrequests\n| where customDimensions.system_KubernetesNamespace==systemName\n  and name contains \"CreateDocument\" \n  and timestamp > ago(timeFrame)\n  and success == true\n| summarize NormalSuccess=count() by floor(timestamp, 1d) \n| render timechart;\n\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 9,
+                            "rowSpan": 4,
+                            "x": 9,
+                            "y": 8
+                        }
+                    },
+                    "5": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "109aac7a-272a-4e8b-8107-a88f9915d147"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "// Exceptions causing request failures \n// Find which exceptions led to failed requests in the past hour. \nlet systemName = \"library-management\";\nlet since = ago(7d);\nrequests\n| where timestamp > since\n| where customDimensions.KubernetesNamespace == systemName\n| where success == false\n| join kind= inner (exceptions) on operation_Id\n| project exceptionType = type, failedMethod = method, requestName = name, operation_Id, timestamp\n| summarize ExampleOperationId=max(operation_Id),LastOcurrence=max(timestamp), count() by exceptionType, failedMethod, requestName\n| order by count_\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "ExampleOperationId": "248px",
+                                        "exceptionType": "319px",
+                                        "failedMethod": "278px",
+                                        "LastOcurrence": "178px",
+                                        "requestName": "182px"
+                                    },
+                                    "PartTitle": "Top Exceptions in the last 7 days",
+                                    "Query": "// Exceptions causing request failures \n// Find which exceptions led to failed requests in the past hour. \nlet systemName = \"dynamics\";\nlet since = ago(7d);\nrequests\n| where timestamp > since\n| where customDimensions.system_KubernetesNamespace == systemName\n| where success == false\n| join kind= inner (exceptions) on operation_Id\n| project exceptionType = type, requestName = name, failedMethod = method, operation_Id, timestamp\n| summarize ExampleOperationId=max(operation_Id),LastOcurrence=max(timestamp), count() by exceptionType, failedMethod, requestName\n| order by count_\n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 7,
+                            "x": 0,
+                            "y": 12
+                        }
+                    },
+                    "6": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "11dc13e1-12a2-4b90-be98-20e2abf6ad69"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let from = startofday(ago(30d));\nlet systemName = \"dynamics\";\nlet requestIngestion = requests\n| where timestamp > from\n| where customDimensions.system_SystemName == systemName\n| summarize TotalVolumeInGB=sum(_BilledSize) / pow(1024, 3) by bin(timestamp, 1d)\n| extend type = \"requests\";\nlet exceptionsIngestion = exceptions\n| where timestamp > from\n| where customDimensions.system_SystemName == systemName\n| summarize TotalVolumeInGB=sum(_BilledSize) / pow(1024, 3) by bin(timestamp, 1d)\n| extend type = \"exceptions\";\nlet dependenciesIngestion = dependencies\n| where timestamp > from\n| where customDimensions.system_SystemName == systemName\n| summarize TotalVolumeInGB=sum(_BilledSize) / pow(1024, 3) by bin(timestamp, 1d)\n| extend type = \"dependencies\";\nlet customEventsIngestion = customEvents\n| where timestamp > from\n| where customDimensions.system_SystemName == systemName\n| summarize TotalVolumeInGB=sum(_BilledSize) / pow(1024, 3) by bin(timestamp, 1d)\n| extend type = \"customEvents\";\nunion isfuzzy=true requestIngestion, exceptionsIngestion, dependenciesIngestion, customEventsIngestion\n| render timechart \n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "type",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "TotalVolumeInGB",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "In the past 30 days",
+                                    "PartTitle": "Data ingested in Application Insights by Dynamics"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 9,
+                            "rowSpan": 5,
+                            "x": 0,
+                            "y": 19
+                        }
+                    },
+                    "7": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/monitor/providers/microsoft.operationalinsights/workspaces/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "132059d5-0181-44c5-8f82-b3444d142969"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let billableTimeView = 7d;\nContainerLog\n| join (KubePodInventory | where TimeGenerated > startofday(ago(billableTimeView)) | project Namespace, ContainerID) on ContainerID\n| where TimeGenerated > startofday(ago(billableTimeView))\n| where Namespace == \"dynamics\"\n| summarize TotalBilledSize=sum(_BilledSize)/1000 by bin(TimeGenerated, 1d)\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "ControlType": "FrameControlChart",
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "TimeGenerated",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "TotalVolumeInGB",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    },
+                                    "LegendOptions": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    },
+                                    "PartSubTitle": "In the past 7 days",
+                                    "PartTitle": "Container log ingestion",
+                                    "Query": "let from = startofday(ago(7d));\nContainerLog\n| join (KubePodInventory | where TimeGenerated > from | project Namespace, ContainerID) on ContainerID\n| where TimeGenerated > from\n| where Namespace == \"dynamics\"\n| summarize TotalVolumeInGB=sum(_BilledSize)/pow(1024,3) by bin(TimeGenerated, 1d)\n| render timechart \n\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 9,
+                            "rowSpan": 5,
+                            "x": 9,
+                            "y": 19
+                        }
+                    },
+                    "8": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/monitor/providers/microsoft.operationalinsights/workspaces/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "13a3eaa8-13be-4230-a9a1-0114bcce083a"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let from = startofday(ago(7d));\nContainerLog\n| join (KubePodInventory | where TimeGenerated > from | project Namespace, ContainerID, ClusterName) on ContainerID\n| where TimeGenerated > from\n| where Namespace == \"dynamics\"\n| extend logMessage = replace_regex(LogEntry, @\"(\\[\\d{2}:\\d{2}:\\d{2} \\w{3}\\]) (.*)\", @\"\\2\")\n| extend logMessage = replace_regex(logMessage, @\"(Received|Sent) message (.*?)(, Id: .*)\", @\"\\1 message \\2\")\n| extend logMessage = replace_regex(logMessage, @\"Asset (.*?) finished to migrate\", \"Asset [AssetId] finished to migrate\")\n| extend logMessage = replace_regex(logMessage, @\"Unhandled exception 1 while handling message with ID (.*)\", \"Unhandled exception 1 while handling message with ID [MessageId]\")\n| extend logMessage = replace_regex(logMessage, @\"ScheduledJobRunner: Starting job (.*?) in tenant (.*?)$\", @\"ScheduledJobRunner: Starting job \\1 in tenant [Tenant]\")\n| extend logMessage = replace_regex(logMessage, @\"ScheduledJobRunner: Finishing job (.*?) in tenant (.*?) with status (.*?)$\", @\"ScheduledJobRunner: Finishing job \\1 in tenant [Tenant] with status \\3\")\n| extend logMessage = replace_regex(logMessage, @\"Templafy.Dynamics.Application.AssetFiles.Migration.MigrateAssetFileException: Fail to Migrate Asset (.*)\", \"Templafy.Dynamics.Application.AssetFiles.Migration.MigrateAssetFileException: Fail to Migrate Asset [AssetId]\")\n| extend logMessage = replace_regex(logMessage, @\"Validating server certificate for mutual TLS. Requested URI: (.*?)\\. Server presented certificate: \\[Subject\\]\", \"Validating server certificate for mutual TLS. Requested URI: [RequestUri]. Server presented certificate: [Subject]\")\n| summarize Count=count(), TotalBilledSizeInMB=sum(_BilledSize)/1000 by logMessage, ClusterName, bin(TimeGenerated, 1d)\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "Message": "918px"
+                                    },
+                                    "PartSubTitle": "In the past 7 days",
+                                    "PartTitle": "Container log Messages",
+                                    "Query": "let from = startofday(ago(7d));\nContainerLog\n| join (KubePodInventory | where TimeGenerated > from | project Namespace, ContainerID, ClusterName) on ContainerID\n| where TimeGenerated > from\n| where Namespace == \"dynamics\"\n| extend logMessage = replace_regex(LogEntry, @\"(\\[\\d{2}:\\d{2}:\\d{2} \\w{3}\\]) (.*)\", @\"\\2\")\n| extend logMessage = replace_regex(logMessage, @\"(Received|Sent) message (.*?)(, Id: .*)\", @\"\\1 message \\2\")\n| extend logMessage = replace_regex(logMessage, @\"Asset (.*?) finished to migrate\", \"Asset [AssetId] finished to migrate\")\n| extend logMessage = replace_regex(logMessage, @\"Unhandled exception 1 while handling message with ID (.*)\", \"Unhandled exception 1 while handling message with ID [MessageId]\")\n| extend logMessage = replace_regex(logMessage, @\"ScheduledJobRunner: Starting job (.*?) in tenant (.*?)$\", @\"ScheduledJobRunner: Starting job \\1 in tenant [Tenant]\")\n| extend logMessage = replace_regex(logMessage, @\"ScheduledJobRunner: Finishing job (.*?) in tenant (.*?) with status (.*?)$\", @\"ScheduledJobRunner: Finishing job \\1 in tenant [Tenant] with status \\3\")\n| extend logMessage = replace_regex(logMessage, @\"Templafy.Dynamics.Application.AssetFiles.Migration.MigrateAssetFileException: Fail to Migrate Asset (.*)\", \"Templafy.Dynamics.Application.AssetFiles.Migration.MigrateAssetFileException: Fail to Migrate Asset [AssetId]\")\n| extend logMessage = replace_regex(logMessage, @\"Validating server certificate for mutual TLS. Requested URI: (.*?)\\. Server presented certificate: \\[Subject\\]\", \"Validating server certificate for mutual TLS. Requested URI: [RequestUri]. Server presented certificate: [Subject]\")\n| summarize Count=count(), TotalVolumeInGB=sum(_BilledSize) / pow(2, 30) by Message = logMessage, ClusterName\n| project Message, ClusterName, Count, TotalVolumeInGB\n| sort by Count desc\n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 5,
+                            "x": 0,
+                            "y": 24
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "model": {
+                "filterLocale": {
+                    "value": "en-us"
+                },
+                "filters": {
+                    "value": {
+                        "MsPortalFx_TimeRange": {
+                            "displayCache": {
+                                "name": "UTC Time",
+                                "value": "Past 30 days"
+                            },
+                            "filteredPartIds": [
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd056009",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd05600b",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd05600d",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd05600f",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd056011",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd056013",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd056017",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd056019",
+                                "StartboardPart-LogsDashboardPart-194e61c3-f4e2-4e56-b9ce-1195cd05601b"
+                            ],
+                            "model": {
+                                "format": "utc",
+                                "granularity": "auto",
+                                "relative": "30d"
+                            }
+                        }
+                    }
+                },
+                "timeRange": {
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange",
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,1098 @@
+{
+    "id": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/dashboards/providers/microsoft.portal/dashboards/productivity-management",
+    "name": "productivity-management",
+    "type": "microsoft.portal/dashboards",
+    "location": "westeurope",
+    "tags": {
+        "hidden-title": "Productivity Management"
+    },
+    "kind": "",
+    "sku": null,
+    "plan": null,
+    "managedBy": "",
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {
+                    "0": {
+                        "metadata": {
+                            "inputs": [],
+                            "settings": {
+                                "content": {
+                                    "settings": {
+                                        "content": "# Go to [Product Dashboard](https://portal.azure.com/#@templafy.com/dashboard/arm/subscriptions/84ddf304-6192-4ec2-b519-4e2a7b2d0666/resourcegroups/localhost/providers/microsoft.portal/dashboards/2ca75aa3-8741-4c4d-becb-940040c09048)",
+                                        "markdownSource": 1,
+                                        "subtitle": "",
+                                        "title": ""
+                                    }
+                                }
+                            },
+                            "type": "Extension/HubsExtension/PartType/MarkdownPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 1,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    "1": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod0/providers/Microsoft.ContainerService/managedClusters/templafyprod0",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod1/providers/Microsoft.ContainerService/managedClusters/templafyprod1",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod2/providers/Microsoft.ContainerService/managedClusters/templafyprod2",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod3/providers/Microsoft.ContainerService/managedClusters/templafyprod3"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "11ad6ea4-141a-467e-a5f0-238541115ef8"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters",
+                                    "value": {
+                                        "scope": "hierarchy"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'cpuLimitNanoCores';\nlet usageCounterName = 'cpuUsageNanoCores';\nlet containerWebApiSystemInternal = \"engage-webapi-private\";\nPerf\n| where InstanceName has containerWebApiSystemInternal\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName has containerWebApiSystemInternal\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyprod0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "InstanceName",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "TimeGenerated",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "UsagePercent",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "partHeader": {
+                                "subtitle": "",
+                                "title": "CPU used percentage over time (WebApi)"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "prod0, prod1, prod2, prod3",
+                                    "PartTitle": "CPU used percentage over time (WebApi Private)",
+                                    "Query": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'cpuLimitNanoCores';\nlet usageCounterName = 'cpuUsageNanoCores';\nlet containerWebApi = \"productivity-management-webapi\";\nPerf\n| where InstanceName hassuffix_cs containerWebApi\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName hassuffix_cs containerWebApi\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 1
+                        }
+                    },
+                    "2": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod0/providers/Microsoft.ContainerService/managedClusters/templafyprod0",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod1/providers/Microsoft.ContainerService/managedClusters/templafyprod1",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod2/providers/Microsoft.ContainerService/managedClusters/templafyprod2",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod3/providers/Microsoft.ContainerService/managedClusters/templafyprod3"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "667ae56a-8492-4976-9042-6ca1e122da94"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters",
+                                    "value": {
+                                        "scope": "hierarchy"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'cpuLimitNanoCores';\nlet usageCounterName = 'cpuUsageNanoCores';\nlet containerSystemName = \"engage-messageprocessor\";\nPerf\n| where InstanceName hassuffix_cs containerSystemName\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName hassuffix_cs containerSystemName\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyprod0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "InstanceName",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "TimeGenerated",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "UsagePercent",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "prod0, prod1, prod2, prod3",
+                                    "PartTitle": "CPU used percentage over time (Message Processor)",
+                                    "Query": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'cpuLimitNanoCores';\nlet usageCounterName = 'cpuUsageNanoCores';\nlet containerSystemName = \"productivity-management-messageprocessor\";\nPerf\n| where InstanceName hassuffix_cs containerSystemName\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName hassuffix_cs containerSystemName\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 6,
+                            "y": 1
+                        }
+                    },
+                    "3": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "31a82027-4f04-407d-a03f-570d333c6db3"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "// Response time trend \n// Chart request duration over the last 12 hours. \n// To create an alert for this query, click '+ New alert rule'\nrequests\n| where timestamp > ago(1d) \n| where customDimensions.KubernetesNamespace == \"engage\"\n| where success == True\n| where url contains \"/api/\"\n| summarize avg(duration) by name\n| order by avg_duration desc \n| take 10 \n| render barchart  \n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedBar"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "name",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange"
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "Endpoint",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "Duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    },
+                                    "IsQueryContainTimeRange": false,
+                                    "LegendOptions": {
+                                        "isEnabled": false,
+                                        "position": "Bottom"
+                                    },
+                                    "PartTitle": "Top slowests API endpoints",
+                                    "Query": "requests\n| where customDimensions[\"system_KubernetesNamespace\"] == \"productivity-management\" and success == True\n| where url has \"/api/\" and name !has \"GET Warmup/Warmup\"\n| summarize Duration=avg(duration) by Endpoint=name\n| order by Duration desc \n| take 10 \n| render barchart  \n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 12,
+                            "y": 1
+                        }
+                    },
+                    "4": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "49a1240d-1aba-4a70-b110-d2b72514d79e"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P7D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "// Slowest pages \n// What are the 3 slowest pages, and how slow are they? \npageViews\n| where notempty(duration) and client_Type == 'Browser'\n| where name == 'Engage.WebApp' //and operation_Name has '/engage/documents/'\n| extend total_duration=duration*itemCount, endpoint = replace('/engage/v/\\\\w+','/engage/v/***', replace('/engage/documents/\\\\d+','/engage/documents/***', operation_Name))\n| summarize avg_duration=(sum(total_duration)/sum(itemCount)) by endpoint\n| top 10 by avg_duration desc\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedColumn"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "endpoint",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avg_duration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "endpoint",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "view",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    },
+                                    "LegendOptions": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    },
+                                    "PartTitle": "Most viewed pages",
+                                    "Query": "pageViews\n| where name == 'ProductivityManagement.WebApp.Admin'\n| extend endpoint = operation_Name\n| summarize view= count() by endpoint\n| top 10 by view desc\n| render barchart \n\n",
+                                    "SpecificChart": "StackedBar"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 18,
+                            "y": 1
+                        }
+                    },
+                    "5": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod0/providers/Microsoft.ContainerService/managedClusters/templafyprod0",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod3/providers/Microsoft.ContainerService/managedClusters/templafyprod3",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod2/providers/Microsoft.ContainerService/managedClusters/templafyprod2",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod1/providers/Microsoft.ContainerService/managedClusters/templafyprod1"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "1576f3f6-8fcb-4acc-8f10-db240721e9b7"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters",
+                                    "value": {
+                                        "scope": "hierarchy"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'memoryLimitBytes';\nlet usageCounterName = 'memoryRssBytes';\nlet containerWebApiSystemInternal = \"engage-messageprocessor\";\nPerf\n| where InstanceName hassuffix_cs containerWebApiSystemInternal\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName hassuffix_cs containerWebApiSystemInternal\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyprod0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "InstanceName",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "TimeGenerated",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "UsagePercent",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "prod0, prod1, prod2, prod3",
+                                    "PartTitle": "Memory used percentage over time (Message Processor)",
+                                    "Query": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'memoryLimitBytes';\nlet usageCounterName = 'memoryRssBytes';\nlet containerWebApiSystemInternal = \"productivity-management-messageprocessor\";\nPerf\n| where InstanceName hassuffix_cs containerWebApiSystemInternal\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName hassuffix_cs containerWebApiSystemInternal\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 5
+                        }
+                    },
+                    "6": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod0/providers/Microsoft.ContainerService/managedClusters/templafyprod0",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod1/providers/Microsoft.ContainerService/managedClusters/templafyprod1",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod2/providers/Microsoft.ContainerService/managedClusters/templafyprod2",
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Prod3/providers/Microsoft.ContainerService/managedClusters/templafyprod3"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "4ef4ab30-bd47-48a8-b12d-990b1d1cf7dd"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters",
+                                    "value": {
+                                        "scope": "hierarchy"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'memoryLimitBytes';\nlet usageCounterName = 'memoryRssBytes';\nlet containerWebApiSystemInternal = \"engage-webapi-private\";\nPerf\n| where InstanceName has containerWebApiSystemInternal\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName has containerWebApiSystemInternal\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "Line"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyprod0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "InstanceName",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "TimeGenerated",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "UsagePercent",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "partHeader": {
+                                "subtitle": "",
+                                "title": "Memory used percentage over time (WebApi)"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "prod0, prod1, prod2, prod3",
+                                    "PartTitle": "Memory used percentage over time (WebApi Private)",
+                                    "Query": "let endDateTime = now();\nlet startDateTime = ago(12h);\nlet trendBinSize = 30m;\nlet capacityCounterName = 'memoryLimitBytes';\nlet usageCounterName = 'memoryRssBytes';\nlet containerWebApi = \"productivity-management-webapi\";\nPerf\n| where InstanceName hassuffix_cs containerWebApi\n| where TimeGenerated < endDateTime\n| where TimeGenerated >= startDateTime\n| where ObjectName == 'K8SContainer'\n| where CounterName == capacityCounterName\n| summarize LimitValue = max(CounterValue) by InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), CounterName, bin(TimeGenerated, trendBinSize)\n| project InstanceName, CapacityStartTime = TimeGenerated, CapacityEndTime = TimeGenerated + trendBinSize, LimitValue\n| join (\n    Perf\n    | where InstanceName hassuffix_cs containerWebApi\n    | where TimeGenerated < endDateTime + trendBinSize\n    | where TimeGenerated >= startDateTime - trendBinSize\n    | where ObjectName == 'K8SContainer'\n    | where CounterName == usageCounterName\n    | project InstanceName=extract('templafy(prod\\\\d{1})', 1, InstanceName), UsageValue = CounterValue, TimeGenerated\n    )\n    on InstanceName\n| project InstanceName, TimeGenerated, UsagePercent = UsageValue * 100.0 / LimitValue\n| summarize UsagePercent = avg(UsagePercent) by bin(TimeGenerated, trendBinSize), InstanceName\n| render timechart \n\n"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 6,
+                            "y": 5
+                        }
+                    },
+                    "7": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "15214c85-89ce-414f-9a10-98e7c722a326"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "P1D"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\r\n| where customDimensions.KubernetesNamespace == \"engage\"\r\n| where success == True\r\n| where url contains \"/api/\"\r\n| summarize avgRequestDuration=avg(duration) by bin(timestamp, 10m) // use a time grain of 10 minutes\r\n| render timechart\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedArea"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "avgRequestDuration",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "Dimensions": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "Timestamp",
+                                            "type": "datetime"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "ResponseTime",
+                                                "type": "real"
+                                            }
+                                        ]
+                                    },
+                                    "LegendOptions": {
+                                        "isEnabled": false,
+                                        "position": "Bottom"
+                                    },
+                                    "PartTitle": "Average API Response Time",
+                                    "Query": "requests\n| where customDimensions[\"system_KubernetesNamespace\"] == \"productivity-management\"\n| where success == True\n| where url has \"/api/\" and not(url has \"/warmup\")\n| summarize ResponseTime=avg(duration) by Timestamp=bin(timestamp, 10m) // use a time grain of 10 minutes\n| render timechart\n\n",
+                                    "SpecificChart": "Line"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 12,
+                            "y": 5
+                        }
+                    },
+                    "8": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "03a46060-13ab-4a90-aa10-a135e374fc65"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange",
+                                    "value": "2021-08-01T10:47:42.000Z/2021-12-07T10:47:42.600Z"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "requests\n| where customDimensions.system_KubernetesNamespace == \"productivity-management\"\n| where success == false\n| join kind= inner (exceptions) on operation_Id\n| project exceptionType = type, requestName = name, failedMethod = method, operation_Id, timestamp\n| summarize ExampleOperationId=max(operation_Id),LastOcurrence=max(timestamp), count() by exceptionType, failedMethod, requestName\n| order by count_\n\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "AnalyticsGrid"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": false
+                                }
+                            ],
+                            "settings": {
+                                "content": {
+                                    "GridColumnsWidth": {
+                                        "ExampleOperationId": "291px",
+                                        "exceptionType": "338px",
+                                        "failedMethod": "398px",
+                                        "requestName": "310px"
+                                    },
+                                    "PartTitle": "Productivity Management Top Server Exceptions"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 18,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 9
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "model": {
+                "filterLocale": {
+                    "value": "en-us"
+                },
+                "filters": {
+                    "value": {
+                        "MsPortalFx_TimeRange": {
+                            "displayCache": {
+                                "name": "Local Time",
+                                "value": "Past 7 days"
+                            },
+                            "filteredPartIds": [
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc100b",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc100d",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc100f",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc1011",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc1013",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc1015",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc1017",
+                                "StartboardPart-LogsDashboardPart-f9bf66f0-a053-4482-acb8-eb046bcc1019"
+                            ],
+                            "model": {
+                                "format": "local",
+                                "granularity": "auto",
+                                "relative": "7d"
+                            }
+                        }
+                    }
+                },
+                "timeRange": {
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange",
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

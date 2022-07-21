@@ -1,0 +1,691 @@
+{
+    "id": "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourcegroups/dashboards/providers/microsoft.portal/dashboards/library-app",
+    "name": "library-app",
+    "type": "microsoft.portal/dashboards",
+    "location": "westeurope",
+    "tags": {
+        "hidden-title": "Library App"
+    },
+    "kind": "",
+    "sku": null,
+    "plan": null,
+    "managedBy": "",
+    "properties": {
+        "lenses": {
+            "0": {
+                "order": 0,
+                "parts": {
+                    "0": {
+                        "metadata": {
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "1100662d-7774-4e0b-be62-f2c6554a81e1"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "customMetrics \n| where timestamp > ago(30d) and name == \"LibraryApp.WebApp\" and operation_Name has \"__blank\" and customDimensions[\"entryType\"] == \"FirstPaint\"\n| extend performance_bucket = case (value < 250, '<250ms', value >= 250 and value < 500, '250ms-500ms', value >=500 and value < 1000, '500ms-1sec', value >= 1000 and value < 2000, '1sec-2sec', value >= 2000 and value < 5000 , '2sec-5sec', value >= 5000 and value < 10000 , '5sec-10sec', '>10sec')\n| summarize countRequest = count(), avgDuration=avg(value) by  performance_bucket\n| order by avgDuration asc\n| project-away avgDuration\n| render barchart\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedBar"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "performance_bucket",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "countRequest",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "templafyproduction",
+                                "partTitle": "Analytics"
+                            },
+                            "settings": {},
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 6,
+                            "rowSpan": 4,
+                            "x": 0,
+                            "y": 0
+                        }
+                    },
+                    "1": {
+                        "metadata": {
+                            "filters": {
+                                "MsPortalFx_TimeRange": {
+                                    "model": {
+                                        "format": "utc",
+                                        "granularity": "auto",
+                                        "relative": "7d"
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "4aa6b284-0b72-47d1-8106-c5f406144aff"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "customMetrics \n| where timestamp > ago(5d) and name == \"LibraryApp.WebApp\" and customDimensions[\"entryType\"] == \"FirstPaint\" and (operation_Name == \"/library/documents\" or operation_Name == \"/library/presentations\" or operation_Name == \"/library/spreads\")\n| extend day = format_datetime(timestamp, \"MM-dd-yyyy\"), performance_bucket = case (value < 250, 'a) <250ms', value >= 250 and value < 500, 'b) 250ms-500ms', value >=500 and value < 1000, 'c) 500ms-1sec', value >= 1000 and value < 2000, 'd) 1sec-2sec', value >= 2000 and value < 5000 , 'e) 2sec-5sec', value >= 5000 and value < 10000 , 'f) 5sec-10sec', 'g) >10sec')\n| summarize count = count() by  day, performance_bucket\n| sort by day asc, performance_bucket asc\n| render columnchart with (kind=stacked100)\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "PercentageColumn"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "performance_bucket",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "day",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "count",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "Library App - Web App",
+                                "partTitle": "Composer FirstPaint Daily"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "Library App - Web App",
+                                    "PartTitle": "Composer FirstPaint Daily"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 12,
+                            "rowSpan": 5,
+                            "x": 0,
+                            "y": 5
+                        }
+                    },
+                    "2": {
+                        "metadata": {
+                            "filters": {
+                                "MsPortalFx_TimeRange": {
+                                    "model": {
+                                        "format": "utc",
+                                        "granularity": "auto",
+                                        "relative": "7d"
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "298113c9-98a9-4164-a4b3-dc100134e34c"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "customMetrics \n| where timestamp > ago(5d) and name == \"LibraryApp.WebApp\" and operation_Name has \"__blank\" and customDimensions[\"entryType\"] == \"FirstPaint\"\n| extend day = format_datetime(timestamp, \"MM-dd-yyyy\"), performance_bucket = case (value < 250, 'a) <250ms', value >= 250 and value < 500, 'b) 250ms-500ms', value >=500 and value < 1000, 'c) 500ms-1sec', value >= 1000 and value < 2000, 'd) 1sec-2sec', value >= 2000 and value < 5000 , 'e) 2sec-5sec', value >= 5000 and value < 10000 , 'f) 5sec-10sec', 'g) >10sec')\n| summarize count = count() by  day, performance_bucket\n| sort by day asc, performance_bucket asc\n| render columnchart with (kind=stacked100)\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "PercentageColumn"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [
+                                            {
+                                                "name": "performance_bucket",
+                                                "type": "string"
+                                            }
+                                        ],
+                                        "xAxis": {
+                                            "name": "day",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "count",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "Library  App - Web App",
+                                "partTitle": "Blank Document FirstPaint Daily"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "Library  App - Web App",
+                                    "PartTitle": "Blank Document FirstPaint Daily"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 12,
+                            "rowSpan": 5,
+                            "x": 13,
+                            "y": 5
+                        }
+                    },
+                    "3": {
+                        "metadata": {
+                            "filters": {
+                                "MsPortalFx_TimeRange": {
+                                    "model": {
+                                        "format": "utc",
+                                        "granularity": "auto",
+                                        "relative": "7d"
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "4a3c6d54-f411-4618-85fc-1a7eb798bdd4"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "customMetrics \n| where timestamp > ago(7d) and name == \"LibraryApp.WebApp\" and customDimensions[\"entryType\"] == \"FirstPaint\" and (operation_Name == \"/library/documents\" or operation_Name == \"/library/presentations\" or operation_Name == \"/library/spreads\")\n| extend performance_bucket = case (value < 250, '<250ms', value >= 250 and value < 500, '250ms-500ms', value >=500 and value < 1000, '500ms-1sec', value >= 1000 and value < 2000, '1sec-2sec', value >= 2000 and value < 5000 , '2sec-5sec', value >= 5000 and value < 10000 , '5sec-10sec', '>10sec')\n| summarize countRequest = count(), avgDuration=avg(value) by  performance_bucket\n| order by avgDuration asc\n| project-away avgDuration\n| render barchart\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedBar"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "performance_bucket",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "countRequest",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "Library App - Web App",
+                                "partTitle": "Composer Average First Paint"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "Library App - Web App",
+                                    "PartTitle": "Composer Average First Paint"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 12,
+                            "rowSpan": 8,
+                            "x": 0,
+                            "y": 10
+                        }
+                    },
+                    "4": {
+                        "metadata": {
+                            "filters": {
+                                "MsPortalFx_TimeRange": {
+                                    "model": {
+                                        "format": "utc",
+                                        "granularity": "auto",
+                                        "relative": "7d"
+                                    }
+                                }
+                            },
+                            "inputs": [
+                                {
+                                    "isOptional": true,
+                                    "name": "resourceTypeMode"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ComponentId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Scope",
+                                    "value": {
+                                        "resourceIds": [
+                                            "/subscriptions/5b17cf24-70b2-4d5a-b0a2-295036ef873b/resourceGroups/Monitor/providers/microsoft.insights/components/templafyproduction"
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartId",
+                                    "value": "16b5c176-169a-4f45-a314-914e5d965d26"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Version",
+                                    "value": "2.0"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "TimeRange"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DashboardId"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "DraftRequestParameters"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Query",
+                                    "value": "customMetrics \n| where timestamp > ago(7d) and name == \"LibraryApp.WebApp\" and operation_Name has \"__blank\" and customDimensions[\"entryType\"] == \"FirstPaint\"\n| extend performance_bucket = case (value < 250, '<250ms', value >= 250 and value < 500, '250ms-500ms', value >=500 and value < 1000, '500ms-1sec', value >= 1000 and value < 2000, '1sec-2sec', value >= 2000 and value < 5000 , '2sec-5sec', value >= 5000 and value < 10000 , '5sec-10sec', '>10sec')\n| summarize countRequest = count(), avgDuration=avg(value) by  performance_bucket\n| order by avgDuration asc\n| project-away avgDuration\n| render barchart\n"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "ControlType",
+                                    "value": "FrameControlChart"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "SpecificChart",
+                                    "value": "StackedBar"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartTitle",
+                                    "value": "Analytics"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "PartSubTitle",
+                                    "value": "templafyproduction"
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "Dimensions",
+                                    "value": {
+                                        "aggregation": "Sum",
+                                        "splitBy": [],
+                                        "xAxis": {
+                                            "name": "performance_bucket",
+                                            "type": "string"
+                                        },
+                                        "yAxis": [
+                                            {
+                                                "name": "countRequest",
+                                                "type": "long"
+                                            }
+                                        ]
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "LegendOptions",
+                                    "value": {
+                                        "isEnabled": true,
+                                        "position": "Bottom"
+                                    }
+                                },
+                                {
+                                    "isOptional": true,
+                                    "name": "IsQueryContainTimeRange",
+                                    "value": true
+                                }
+                            ],
+                            "savedContainerState": {
+                                "assetName": "Library App - Web",
+                                "partTitle": "Blank Document Average First Paint"
+                            },
+                            "settings": {
+                                "content": {
+                                    "PartSubTitle": "Library App - Web",
+                                    "PartTitle": "Blank Document Average First Paint"
+                                }
+                            },
+                            "type": "Extension/Microsoft_OperationsManagementSuite_Workspace/PartType/LogsDashboardPart"
+                        },
+                        "position": {
+                            "colSpan": 12,
+                            "rowSpan": 8,
+                            "x": 13,
+                            "y": 10
+                        }
+                    }
+                }
+            }
+        },
+        "metadata": {
+            "model": {
+                "filterLocale": {
+                    "value": "en-us"
+                },
+                "filters": {
+                    "value": {
+                        "MsPortalFx_TimeRange": {
+                            "displayCache": {
+                                "name": "UTC Time",
+                                "value": "Past 24 hours"
+                            },
+                            "filteredPartIds": [
+                                "StartboardPart-LogsDashboardPart-74a2f9ec-73d6-4b7a-a89e-003c3ef10007",
+                                "StartboardPart-LogsDashboardPart-74a2f9ec-73d6-4b7a-a89e-003c3ef10009",
+                                "StartboardPart-LogsDashboardPart-74a2f9ec-73d6-4b7a-a89e-003c3ef1000b",
+                                "StartboardPart-LogsDashboardPart-74a2f9ec-73d6-4b7a-a89e-003c3ef1000d",
+                                "StartboardPart-LogsDashboardPart-74a2f9ec-73d6-4b7a-a89e-003c3ef1000f"
+                            ],
+                            "model": {
+                                "format": "utc",
+                                "granularity": "auto",
+                                "relative": "24h"
+                            }
+                        }
+                    }
+                },
+                "timeRange": {
+                    "type": "MsPortalFx.Composition.Configuration.ValueTypes.TimeRange",
+                    "value": {
+                        "relative": {
+                            "duration": 24,
+                            "timeUnit": 1
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
